@@ -2,13 +2,18 @@ let check = false;
 
 // Function to change the value of a product in the cart
 function changeVal(el) {
-  let qt = parseFloat(el.parent().children(".qt").html()); // Get the quantity of the product
-  let price = parseFloat(el.parent().children(".price").html()); // Get the price of the product
-  let eq = Math.round(price * qt * 100) / 100; // Calculate the total price of the product
+  // Get the quantity of the product
+  let qt = parseFloat(el.parent().children(".qt").html()); 
+  // Get the price of the product
+  let price = parseFloat(el.parent().children(".price").html()); 
+  // Calculate the total price of the product
+  let eq = Math.round(price * qt * 100) / 100; 
   
-  el.parent().children(".full-price").html(eq + " ZAR"); // Update the displayed total price of the product
+  // Update the displayed total price of the product
+  el.parent().children(".full-price").html(eq + " ZAR"); 
   
-  changeTotal(); // Recalculate and update the overall total of the cart
+  // Recalculate and update the overall total of the cart
+  changeTotal(); 
 }
 
 // Function to update the overall total of the cart
@@ -16,53 +21,70 @@ function changeTotal() {
   let price = 0;
   
   $(".full-price").each(function(index) {
-    price += parseFloat($(".full-price").eq(index).html()); // Sum up the individual prices of the products
+    // Sum up the individual prices of the products
+    price += parseFloat($(".full-price").eq(index).html()); 
   });
   
-  price = Math.round(price * 100) / 100; // Round the total price to two decimal places
-  let tax = Math.round(price * 0.05 * 100) / 100; // Calculate the tax (5% of the total price)
-  let shipping = parseFloat($(".shipping span").html()); // Get the shipping cost
-  let fullPrice = Math.round((price + tax + shipping) * 100) / 100; // Calculate the final total price
+  // Round the total price to two decimal places
+  price = Math.round(price * 100) / 100; 
+  // Calculate the tax (5% of the total price)
+  let tax = Math.round(price * 0.05 * 100) / 100; 
+  // Get the shipping cost
+  let shipping = parseFloat($(".shipping span").html()); 
+  // Calculate the final total price
+  let fullPrice = Math.round((price + tax + shipping) * 100) / 100; 
   
   if (price == 0) {
-    fullPrice = 0; // If the price is zero, set the total price to zero as well
+    // If the price is zero, set the total price to zero as well
+    fullPrice = 0; 
   }
   
-  $(".subtotal span").html(price + " ZAR"); // Update the displayed subtotal
-  $(".tax span").html(tax + " ZAR"); // Update the displayed tax
-  $(".total span").html(fullPrice + " ZAR"); // Update the displayed total price
+  // Update the displayed subtotal
+  $(".subtotal span").html(price + " ZAR"); 
+  // Update the displayed tax
+  $(".tax span").html(tax + " ZAR"); 
+  // Update the displayed total price
+  $(".total span").html(fullPrice + " ZAR"); 
 }
 
 $(document).ready(function() {
   // Click handler for the "remove" buttons
   $(".remove").click(function() {
     let el = $(this);
-    el.parent().parent().addClass("removed"); // Mark the parent element as removed
+    // Mark the parent element as removed
+    el.parent().parent().addClass("removed"); 
     window.setTimeout(function() {
       el.parent().parent().slideUp('fast', function() { 
-        el.parent().parent().remove(); // Remove the parent element from the DOM after a short delay
+        // Remove the parent element from the DOM after a short delay
+        el.parent().parent().remove(); 
         if ($(".product").length == 0) {
           if (check) {
-            $("#cart").html("<h1>The shop does not function"); // Display a message if the shop does not function
+            // Display a message if the shop does not function
+            $("#cart").html("<h1>The shop does not function"); 
           } else {
-            $("#cart").html("<h1>No products!</h1>"); // Display a message if there are no products
+            // Display a message if there are no products
+            $("#cart").html("<h1>No products!</h1>"); 
           }
         }
-        changeTotal(); // Recalculate and update the overall total of the cart
+        // Recalculate and update the overall total of the cart
+        changeTotal(); 
       });
     }, 200);
   });
   
   // Click handler for the "qt-plus" buttons
   $(".qt-plus").click(function() {
-    $(this).parent().children(".qt").html(parseInt($(this).parent().children(".qt").html()) + 1); // Increment the quantity value
+    // Increment the quantity value
+    $(this).parent().children(".qt").html(parseInt($(this).parent().children(".qt").html()) + 1); 
     
-    $(this).parent().children(".full-price").addClass("added"); // Add the "added" class for visual effect
+    // Add the "added" class for visual effect
+    $(this).parent().children(".full-price").addClass("added"); 
     
     let el = $(this);
     window.setTimeout(function() {
       el.parent().children(".full-price").removeClass("added");
-      changeVal(el); // Call the changeVal function to update the product's value and overall total
+      // Call the changeVal function to update the product's value and overall total
+      changeVal(el); 
     }, 150);
   });
   
@@ -71,20 +93,24 @@ $(document).ready(function() {
     let child = $(this).parent().children(".qt");
     
     if (parseInt(child.html()) > 1) {
-      child.html(parseInt(child.html()) - 1); // Decrement the quantity value if it is greater than 1
+      // Decrement the quantity value if it is greater than 1
+      child.html(parseInt(child.html()) - 1); 
     }
     
-    $(this).parent().children(".full-price").addClass("minused"); // Add the "minused" class for visual effect
+    // Add the "minused" class for visual effect
+    $(this).parent().children(".full-price").addClass("minused"); 
     
     let el = $(this);
     window.setTimeout(function() {
       el.parent().children(".full-price").removeClass("minused");
-      changeVal(el); // Call the changeVal function to update the product's value and overall total
+      // Call the changeVal function to update the product's value and overall total
+      changeVal(el); 
     }, 150);
   });
   
   window.setTimeout(function() {
-    $(".is-open").removeClass("is-open"); // Remove the "is-open" class after a delay
+    // Remove the "is-open" class after a delay
+    $(".is-open").removeClass("is-open"); 
   }, 1200);
   
   // Click handler for the general buttons
