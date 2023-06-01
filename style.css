@@ -3,6 +3,11 @@ body {
     background-color: #eee;
  }
  
+ .intro {
+   font-size: 25px;
+   text-align: center;
+   justify-content: center;
+ }
  .container {
     max-width: 800px;
     margin: 0 auto;
